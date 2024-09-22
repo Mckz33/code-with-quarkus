@@ -1,13 +1,19 @@
 package org.acme.controllers;
+import java.util.UUID;
+
+import org.acme.exceptions.UserNotFoundException;
 import org.acme.models.User;
 import org.acme.services.UserService;
 
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.DefaultValue;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -35,7 +41,25 @@ public class UserController {
                             @QueryParam("pageSize") @DefaultValue("10") Integer pageSize) {
         var users = userService.findAll(page, pageSize);
         return Response.ok(users).build();
+    }
 
+    @GET
+    @Path("/{id}")
+    public Response findById(@PathParam("id") UUID userId) throws UserNotFoundException {
+        return Response.ok(userService.findById(userId)).build();
+    }
+
+    @PUT
+    @Path("/{id}")
+    @Transactional
+    public Response updateUser(@PathParam("id") UUID userId, User user) throws UserNotFoundException {
+        return Response.ok(userService.updateUser(userId, user)).build();
+    }
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public Response deleteUser(@PathParam("id") UUID userId, User user) throws UserNotFoundException {
+        return Response.noContent().build();
     }
     
 }
