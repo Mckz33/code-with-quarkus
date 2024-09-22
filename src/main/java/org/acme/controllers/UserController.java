@@ -2,7 +2,7 @@ package org.acme.controllers;
 import java.util.UUID;
 
 import org.acme.exceptions.UserNotFoundException;
-import org.acme.models.User;
+import org.acme.models.UserModel;
 import org.acme.services.UserService;
 
 import jakarta.transaction.Transactional;
@@ -32,7 +32,7 @@ public class UserController {
 
     @POST
     @Transactional
-    public Response createUser( User user ) {
+    public Response createUser( UserModel user ) {
         return Response.ok(userService.createUser(user)).build();
     }
 
@@ -52,13 +52,13 @@ public class UserController {
     @PUT
     @Path("/{id}")
     @Transactional
-    public Response updateUser(@PathParam("id") UUID userId, User user) throws UserNotFoundException {
+    public Response updateUser(@PathParam("id") UUID userId, UserModel user) throws UserNotFoundException {
         return Response.ok(userService.updateUser(userId, user)).build();
     }
     @DELETE
     @Path("/{id}")
     @Transactional
-    public Response deleteUser(@PathParam("id") UUID userId, User user) throws UserNotFoundException {
+    public Response deleteUser(@PathParam("id") UUID userId, UserModel user) throws UserNotFoundException {
         return Response.noContent().build();
     }
     

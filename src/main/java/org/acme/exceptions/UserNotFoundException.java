@@ -1,7 +1,8 @@
 package org.acme.exceptions;
 
-import java.rmi.NotBoundException;
+public class UserNotFoundException extends RuntimeException {
 
-public class UserNotFoundException extends NotBoundException {
-    
+    public UserNotFoundException(String message) {
+        super(message);  // Passa a mensagem para a superclasse
+    }
 }
